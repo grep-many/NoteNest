@@ -7,7 +7,6 @@ const NoteState = (props) => {
     const authToken = Cookies.get('x-auth-token');
 
     const [notes, setNotes] = useState([]);
-    const { showAlert } = useContext(alertContext);
 
     // Fetch notes from the API
     const fetchNotes = async () => {
@@ -22,7 +21,7 @@ const NoteState = (props) => {
             const fetchedNotes = await response.json();
             setNotes(fetchedNotes);
         } catch (error) {
-            showAlert('Error!','Something went wrong while fetching notes',true);
+            return {success:true,message:"Something went wrong while fetching Notes"};
         }
     };
 
