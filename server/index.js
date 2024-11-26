@@ -6,11 +6,7 @@ const app = express();
 
 connectDB();
 // Enable CORS for all methods and origins
-app.use(cors({
-  origin: '*',  // Allow requests from any origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],  // Allow all methods
-  allowedHeaders: ['Content-Type', 'Authorization']  // Add necessary headers
-}));
+app.use(cors());
 app.use(express.json());
 
 // Available routes
