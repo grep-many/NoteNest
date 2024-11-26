@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import Cookies from 'js-cookie';
 import darkModeContext from '../context/darkMode/darkModeContext';
 import alertContext from '../context/alert/alertContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import noteContext from '../context/notes/noteContext';
 
 
@@ -29,8 +29,8 @@ const Signup = () => {
         const host = process.env.REACT_APP_HOST; // e.g., "http://localhost:5000"
         const url = `${host}/api/auth/createuser`;  // Correct URL for Signup endpoint
 
-        if(credentials.password !== credentials.confirmPassword){
-            showAlert('Warning!','Password and Confirm Password are not same');
+        if (credentials.password !== credentials.confirmPassword) {
+            showAlert('Warning!', 'Password and Confirm Password are not same');
             return;
         }
 
@@ -55,7 +55,7 @@ const Signup = () => {
                 await fetchNotes()
                 navigate('/');
             } else {
-                showAlert('Invalid Credentials', data.msg , true);
+                showAlert('Invalid Credentials', data.msg, true);
                 if (data.errors && data.errors.length > 0) {
                     // Loop through the errors array and log each msg
                     data.errors.forEach((error) => {
@@ -122,7 +122,7 @@ const Signup = () => {
                         >
                             {showPassword ? 'Hide' : 'Show'}
                         </button>
-                        {credentials.password.trim().length<8? <p className="position-absolute top-100 mx-5 text-danger" style={{ fontSize: '10px' }}>Password should be atleast of 8 characters</p> : null}
+                        {credentials.password.trim().length < 8 ? <p className="position-absolute top-100 mx-5 text-danger" style={{ fontSize: '10px' }}>Password should be atleast of 8 characters</p> : null}
                     </div>
                 </div>
 
@@ -137,7 +137,7 @@ const Signup = () => {
                             value={credentials.confirmPassword}
                             onChange={onChange}
                             placeholder="Confirm your password"
-                            />
+                        />
                         <button
                             type="button"
                             className={`btn ${isDarkMode ? 'btn-outline-light' : 'btn-outline-dark'}`}
@@ -145,19 +145,12 @@ const Signup = () => {
                         >
                             {showConfirmPassword ? 'Hide' : 'Show'}
                         </button>
-                        <p className="position-absolute top-100 mx-5 text-danger" style={{ fontSize: '10px' }}>{credentials.password !== credentials.confirmPassword ? 'Confirm Password should be same as Password' : (credentials.confirmPassword.trim().length<8?'Password should be atleast of 8 characters' : null)}</p>
+                        <p className="position-absolute top-100 mx-5 text-danger" style={{ fontSize: '10px' }}>{credentials.password !== credentials.confirmPassword ? 'Confirm Password should be same as Password' : (credentials.confirmPassword.trim().length < 8 ? 'Password should be atleast of 8 characters' : null)}</p>
                     </div>
                 </div>
 
                 <div className="mb-3 form-check">
-                    <input
-                        type="checkbox"
-                        className={`form-check-input ${isDarkMode ? 'bg-black border-white' : 'check-black border bg-white'}`}
-                        id="exampleCheck1"
-                    />
-                    <label className="form-check-label" htmlFor="exampleCheck1">
-                        Agree to terms and conditions
-                    </label>
+                    <p className={`text-${isDarkMode?'white':'black'}`}>Already have an account? <Link to="/login">Log in</Link></p>
                 </div>
 
                 <button type="submit" className={`btn ${isDarkMode ? 'btn-outline-light' : 'btn-outline-dark'}`}>

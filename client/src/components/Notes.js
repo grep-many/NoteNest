@@ -73,7 +73,6 @@ const Notes = () => {
     } catch (error) {
       // Catch and handle any errors that might occur during the API call (network issues, etc.)
       showAlert('Error', 'An error occurred while updating the note. Please try again.', true);
-      console.error('Error adding note:', error);
     } finally {
       closeUpdateModalRef.current.click();
     }

@@ -1,12 +1,13 @@
 import React, { useState, useContext } from 'react';
 import Cookies from 'js-cookie';
-import {useNavigate} from 'react-router'
+import { useNavigate } from 'react-router'
 import darkModeContext from '../context/darkMode/darkModeContext';
 import alertContext from '../context/alert/alertContext';
 import noteContext from '../context/notes/noteContext';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
-    const {fetchNotes} = useContext(noteContext)
+    const { fetchNotes } = useContext(noteContext)
     const { isDarkMode } = useContext(darkModeContext);
     const { showAlert } = useContext(alertContext);
 
@@ -25,7 +26,7 @@ const Login = () => {
         const host = process.env.REACT_APP_HOST; // e.g., "http://localhost:5000"
         const url = `${host}/api/auth/login`;  // Correct URL
 
-        try{
+        try {
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
@@ -33,9 +34,9 @@ const Login = () => {
                 },
                 body: JSON.stringify(credentials),
             });
-    
-            const data = await response.json(); 
-    
+
+            const data = await response.json();
+
             if (response.ok) {
                 showAlert('Success', data.msg);
                 Cookies.set('x-auth-token', data.token, { expires: 1, secure: true, sameSite: 'Strict' });
@@ -47,13 +48,13 @@ const Login = () => {
                 if (data.errors && data.errors.length > 0) {
                     // Loop through the errors array and log each msg
                     data.errors.forEach((error) => {
-                        showAlert('Error!',error.msg,true); // Logs the error message (e.g., "Invalid email format")
+                        showAlert('Error!', error.msg, true); // Logs the error message (e.g., "Invalid email format")
                     });
                 }
             }
         }
-        catch(error){
-            showAlert('Error','Something went wrong',true);
+        catch (error) {
+            showAlert('Error', 'Something went wrong', true);
         }
     };
 
@@ -101,19 +102,12 @@ const Login = () => {
                         >
                             {showPassword ? 'Hide' : 'Show'}
                         </button>
-                        {credentials.password.trim().length<8? <p className="position-absolute top-100 mx-5 text-danger" style={{ fontSize: '10px' }}>Password should be atleast of 8 characters</p> : null}
+                        {credentials.password.trim().length < 8 ? <p className="position-absolute top-100 mx-5 text-danger" style={{ fontSize: '10px' }}>Password should be atleast of 8 characters</p> : null}
                     </div>
                 </div>
 
                 <div className="mb-3 form-check">
-                    <input
-                        type="checkbox"
-                        className={`form-check-input ${isDarkMode ? 'bg-black border-white' : 'check-black border bg-white'}`}
-                        id="exampleCheck1"
-                    />
-                    <label className="form-check-label" htmlFor="exampleCheck1">
-                        Check me out
-                    </label>
+                    <p className={`text-${isDarkMode?'white':'black'}`}>Create an Account <Link to="/signup">Sign Up</Link></p>
                 </div>
 
                 <button type="submit" className={`btn ${isDarkMode ? 'btn-outline-light' : 'btn-outline-dark'}`}>

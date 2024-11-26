@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Cookies from 'js-cookie';
 import NoteContext from "./noteContext";
 
@@ -7,6 +7,7 @@ const NoteState = (props) => {
     const authToken = Cookies.get('x-auth-token');
 
     const [notes, setNotes] = useState([]);
+    const { showAlert } = useContext(alertContext);
 
     // Fetch notes from the API
     const fetchNotes = async () => {
@@ -21,7 +22,7 @@ const NoteState = (props) => {
             const fetchedNotes = await response.json();
             setNotes(fetchedNotes);
         } catch (error) {
-            console.error("Error fetching notes:", error);
+            showAlert('Error!','Something went wrong while fetching notes',true);
         }
     };
 
@@ -44,11 +45,9 @@ const NoteState = (props) => {
                 setNotes((prevNotes) => [...prevNotes, note]);
                 return { success: true, note };
             } else {
-                console.error("Error adding note:", note);
                 return { success: false, message: note.error };
             }
         } catch (error) {
-            console.error("Error adding note:", error);
             return { success: false, message: "An error occurred while adding the note." };
         }
     };
@@ -75,11 +74,9 @@ const NoteState = (props) => {
                 );
                 return { success: true, result };
             } else {
-                console.error("Error updating note:", result);
                 return { success: false, message: result.error };
             }
         } catch (error) {
-            console.error("Error updating note:", error);
             return { success: false, message: "An error occurred while updating the note." };
         }
     };
@@ -101,11 +98,9 @@ const NoteState = (props) => {
                 return { success: true };
             } else {
                 const error = await response.json();
-                console.error("Error deleting note:", error);
                 return { success: false, message: error.error };
             }
         } catch (error) {
-            console.error("Error deleting note:", error);
             return { success: false, message: "An error occurred while deleting the note." };
         }
     };
