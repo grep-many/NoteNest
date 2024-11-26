@@ -26,6 +26,13 @@ jobs:
           cd client  # Navigate to the client folder
           npm ci
       
+      - name: Check if REACT_APP_HOST secret is available
+        run: |
+          if [ -z "${{ secrets.REACT_APP_HOST }}" ]; then
+            echo "REACT_APP_HOST is not set. Cancelling the workflow."
+            exit 1  # Exit the workflow if the secret is not found
+          fi
+      
       - name: Copy .env file
         run: |
           cd client  # Navigate to the client folder
@@ -35,10 +42,12 @@ jobs:
         run: |
           cd client  # Navigate to the client folder
           npm run build
+      
       - name: Create 404.html for routing support
         run: |
           cd client  # Navigate to the client folder
           cp build/index.html build/404.html
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
