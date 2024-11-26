@@ -5,7 +5,12 @@ const { port } = require('./config');
 const app = express();
 
 connectDB();
-app.use(cors());  // Use the corsOptions in the middleware
+// Enable CORS for all methods and origins
+app.use(cors({
+  origin: '*',  // Allow requests from any origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],  // Allow all methods
+  allowedHeaders: ['Content-Type', 'Authorization']  // Add necessary headers
+}));
 app.use(express.json());
 
 // Available routes
