@@ -17,7 +17,7 @@ function App() {
     <NoteState>
       <DarkModeState>
         <AlertState>
-          <Router basename='\NoteNest'>
+          <Router basename='/NoteNest'>
             <Navbar />
             <div className='mx-1 my-2 sticky-top' style={{ height: '50px', top: '70px' }}>
               <Alert />
