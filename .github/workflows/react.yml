@@ -21,7 +21,8 @@ jobs:
 
     - name: Install dependencies
       working-directory: ./client
-      run: npm install
+      run: |
+        npm ci # If you have package-lock.json, use npm ci for clean install
 
     - name: Build client
       working-directory: ./client
