@@ -35,11 +35,13 @@ export default function NavbarComponent() {
         });
     };
 
-    document.querySelectorAll('.nav-item').forEach(element => {
-        element.addEventListener('click', () => {
-            closeHamburger.current.click();
+    if (window.innerWidth < 991) { // Check if the device width is less than 991px
+        document.querySelectorAll('.nav-item').forEach(element => {
+            element.addEventListener('click', () => {
+                closeHamburger.current.click();
+            });
         });
-    });
+    }
 
     return (
         <nav className={`sticky-top navbar navbar-expand-lg ${isDarkMode ? 'navbar-dark bg-black border-white border-bottom' : 'navbar-light bg-light border border-bottom'}`}>
