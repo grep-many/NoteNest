@@ -5,8 +5,22 @@ const { port } = require('./config');
 const app = express();
 
 connectDB();
-// Enable CORS for all methods and origins
-app.use(cors());
+
+// Enable CORS only for a specific origin
+const allowedOrigin = 'https://grep-many.github.io/NoteNest/'; // Replace with your allowed site URL
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (origin === allowedOrigin || !origin) {
+        // Allow requests from the allowed origin or server-side requests (no origin)
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+  })
+);
+
 app.use(express.json());
 
 // Available routes
