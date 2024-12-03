@@ -4,6 +4,9 @@ import darkModeContext from '../context/darkMode/darkModeContext';
 import feature1 from '../assets/feature-1.jpg'
 import feature2 from '../assets/feature-2.jpg'
 import feature3 from '../assets/feature-3.jpeg'
+import testimonial1 from '../assets/testimonial-1.jpg'
+import testimonial2 from '../assets/testimonial-2.jpg'
+import testimonial3 from '../assets/testimonial-3.jpg'
 
 function Home() {
   const {isDarkMode} = useContext(darkModeContext);
@@ -34,8 +37,8 @@ function Header({isDarkMode}) {
     >
       <h1 className="fs-1 mb-3">Welcome to Notes App</h1>
       <p>Organize your tasks, ideas, and projects effortlessly!</p>
-      <Link to="/login" className={`m-1 btn border-${isDarkMode ? 'white btn-outline-light' : 'black btn-outline-dark'}`}>Login</Link>
-      <Link to="/signup" className={`m-1 btn border-${isDarkMode ? 'white btn-outline-light' : 'black btn-outline-dark'}`}>Sign Up</Link>
+      <Link to="/login" className={`m-1 btn border-${isDarkMode ? 'white btn-outline-light shadow-light' : 'black btn-outline-dark shadow'}`}>Login</Link>
+      <Link to="/signup" className={`m-1 btn border-${isDarkMode ? 'white btn-outline-light shadow-light' : 'black btn-outline-dark shadow'}`}>Sign Up</Link>
     </header>
   );
 }
@@ -153,19 +156,19 @@ function Testimonials({isDarkMode}) {
       <h2 className="text-center mb-5">What Our Users Say</h2>
       <div className="d-flex flex-column flex-md-row justify-content-center gap-4">
         <TestimonialCard
-          imgSrc="https://via.placeholder.com/300x150?text=User1"
+          imgSrc={testimonial1}
           name="Jane Doe"
           feedback="This app changed how I organize my life!"
           isDarkMode={isDarkMode}
         />
         <TestimonialCard
-          imgSrc="https://via.placeholder.com/300x150?text=User2"
+          imgSrc={testimonial2}
           name="John Smith"
           feedback="Collaboration has never been easier."
           isDarkMode={isDarkMode}
         />
         <TestimonialCard
-          imgSrc="https://via.placeholder.com/300x150?text=User3"
+          imgSrc={testimonial3}
           name="Emily Clark"
           feedback="I love the seamless synchronization."
           isDarkMode={isDarkMode}
@@ -181,7 +184,11 @@ function TestimonialCard({ imgSrc, name, feedback ,isDarkMode}) {
       <img
         src={imgSrc}
         alt={name}
-        className="rounded-3 w-100 h-auto"
+        className="rounded-3 w-100"
+        style={{
+          height:'200px',
+          objectFit:'cover'
+        }}
       />
       <h3>{name}</h3>
       <p>"{feedback}"</p>

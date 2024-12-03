@@ -1,4 +1,4 @@
-require('dotenv').config({path:'.env.local'}); // Load .env.local for environment variables
+require('dotenv').config(); // Load .env.local for environment variables
 
 // Fetch the database URI and port from environment variables
 const dbURI = process.env.DATABASE_URI;

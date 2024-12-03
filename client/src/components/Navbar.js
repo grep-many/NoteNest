@@ -81,14 +81,17 @@ export default function NavbarComponent() {
                                 Home
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link
-                                className={`nav-link ${location.pathname === '/about' ? 'active' : ''} text-center`}
-                                to="/about"
-                            >
-                                About
-                            </Link>
-                        </li>
+                        {Cookies.get('x-auth-token') &&
+                            <li className="nav-item">
+                                <Link
+                                    className={`nav-link ${location.pathname === '/you' ? 'active' : ''} text-center`}
+                                    aria-current="page"
+                                    to="/you"
+                                >
+                                    You
+                                </Link>
+                            </li>
+                        }
                     </ul>
                     <form className="d-flex justify-content-center">
                         <div className="form-check form-switch my-auto desktop" title="Toggle dark mode">
@@ -101,7 +104,7 @@ export default function NavbarComponent() {
                             />
                         </div>
                         {Cookies.get('x-auth-token') ?
-                            <button className={"m-1 btn border-danger " + (isDarkMode ? 'btn-outline-danger' : 'text-black btn-outline-danger') + ' nav-item'} onClick={handleLogout}>Logout</button>:
+                            <button className={"m-1 btn border-danger " + (isDarkMode ? 'btn-outline-danger' : 'text-black btn-outline-danger') + ' nav-item'} onClick={handleLogout}>Logout</button> :
                             <>
                                 <Link className={"m-1 btn border-" + (isDarkMode ? 'white btn-outline-light' : 'black text-black btn-outline-dark') + ' nav-item'} to='/signup'>Signup</Link>
                                 <Link className={"m-1 btn border-" + (isDarkMode ? 'white btn-outline-light' : 'black text-black btn-outline-dark') + ' nav-item'} to='/login'>Login</Link>
