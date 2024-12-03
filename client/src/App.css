@@ -1,0 +1,88 @@
+input#modeSwitch:checked {
+  border: 1px solid white;
+  background-color: black;
+  background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%27-4 -4 8 8%27%3e%3crect width=%278%27 height=%278%27 fill=%27%23000%27/%3e%3ccircle r=%273%27 fill=%27none%27 stroke=%27%23fff%27 stroke-width=%270.8%27/%3e%3c/svg%3e");
+}
+
+input#modeSwitch:not(checked) {
+  border: 1px solid black;
+  background-color: white;
+  background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%27-4 -4 8 8%27%3e%3ccircle r=%273%27 fill=%27none%27 stroke=%27%23000%27 stroke-width=%270.8%27/%3e%3c/svg%3e");
+}
+
+input#modeSwitch {
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.btn-close.dark{
+  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+}
+
+.dark-mode{
+  background-color: black;
+  color: white;
+}
+
+.light-mode{
+  background-color: white;
+  color: black;
+}
+
+ion-icon{
+  cursor: pointer;
+}
+
+.m-1.btn.border-black.text-black.btn-outline-dark:hover{
+  color: white !important;
+  background-color: black !important;
+}
+
+.border{
+  border: 1px solid #000!important;
+}
+
+.border-white{
+  border-color: #ffffff !important;
+}
+
+.modal-header,.modal-footer{
+  border-color: #000 !important;
+}
+
+.modal-header.dark,.modal-footer.dark{
+  border-color: #ffffff !important;
+}
+
+.card-title {
+  text-align: center;
+  margin-bottom: .5rem;
+  height: fit-content;
+  width: 60%;
+}
+
+.alert-danger{
+  color: red;
+  border-color: red !important;
+}
+
+.desktop{
+  display: block;
+}
+
+.tablet{
+  display: none;
+}
+
+input:checked[type="checkbox"].check-black{
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+}
+
+@media (max-width: 991px) {
+  .desktop{
+    display: none;
+  }
+  .tablet{
+    display: block;
+  }
+}
