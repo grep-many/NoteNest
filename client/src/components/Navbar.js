@@ -10,12 +10,13 @@ export default function NavbarComponent() {
 
     const { isDarkMode, setIsDarkMode } = useContext(darkModeContext);
     const { showAlert } = useContext(alertContext);
-    const {progress,setProgress} = useContext(loadingProgressContext);
+    const {progress ,setProgress} = useContext(loadingProgressContext);
     const location = window.location.pathname; // For active link highlighting
     const closeHamburger = useRef(null);
     const navigate = useNavigate();
 
     const handleLogout = () => {
+        setProgress(25);
         Cookies.remove('x-auth-token');
         navigate('/');
     }
@@ -62,7 +63,7 @@ export default function NavbarComponent() {
                     >
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <Link className="navbar-brand" to="/" onClick={()=>setProgress(100)}>
+                    <Link className="navbar-brand" to="/">
                         NoteNest
                     </Link>
                     <div className="form-check form-switch ms-3 tablet" title="Toggle dark mode">
@@ -81,7 +82,6 @@ export default function NavbarComponent() {
                                     className={`nav-link ${location.pathname === '/' ? 'active' : ''} text-center`}
                                     aria-current="page"
                                     to="/"
-                                    onClick={()=>{setProgress(100)}}
                                 >
                                     Home
                                 </Link>
@@ -111,8 +111,8 @@ export default function NavbarComponent() {
                             {Cookies.get('x-auth-token') ?
                                 <button className={"m-1 btn border-danger " + (isDarkMode ? 'btn-outline-danger' : 'text-black btn-outline-danger') + ' nav-item'} onClick={handleLogout}>Logout</button> :
                                 <>
-                                    <Link className={"m-1 btn border-" + (isDarkMode ? 'white btn-outline-light' : 'black text-black btn-outline-dark') + ' nav-item'} to='/signup' onClick={()=>setProgress(100)}>Signup</Link>
-                                    <Link className={"m-1 btn border-" + (isDarkMode ? 'white btn-outline-light' : 'black text-black btn-outline-dark') + ' nav-item'} to='/login' onClick={()=>setProgress(100)}>Login</Link>
+                                    <Link className={"m-1 btn border-" + (isDarkMode ? 'white btn-outline-light' : 'black text-black btn-outline-dark') + ' nav-item'} to='/signup'>Signup</Link>
+                                    <Link className={"m-1 btn border-" + (isDarkMode ? 'white btn-outline-light' : 'black text-black btn-outline-dark') + ' nav-item'} to='/login'>Login</Link>
                                 </>
                             }
                         </form>

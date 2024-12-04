@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import darkModeContext from '../context/darkMode/darkModeContext';
 import feature1 from '../assets/feature-1.jpg'
@@ -7,20 +7,13 @@ import feature3 from '../assets/feature-3.jpeg'
 import testimonial1 from '../assets/testimonial-1.jpg'
 import testimonial2 from '../assets/testimonial-2.jpg'
 import testimonial3 from '../assets/testimonial-3.jpg'
-import loadingProgressContext from '../context/loadingProgress/loadingProgressContext';
 
 function Home() {
   const { isDarkMode } = useContext(darkModeContext);
-  const { setProgress } = useContext(loadingProgressContext);
-  const location = window.location.pathname;
-
-  useEffect(() => {
-    setProgress(0);
-  }, [location]);
 
   return (
     <div className="font-sans">
-      <Header isDarkMode={isDarkMode} setProgress={setProgress} />
+      <Header isDarkMode={isDarkMode} />
       <Main isDarkMode={isDarkMode} />
     </div>
   );
@@ -37,7 +30,7 @@ function Home() {
   }
 }
 
-function Header({ isDarkMode, setProgress }) {
+function Header({ isDarkMode}) {
 
   return (
     <header
@@ -45,8 +38,8 @@ function Header({ isDarkMode, setProgress }) {
     >
       <h1 className="fs-1 mb-3">Welcome to Notes App</h1>
       <p>Organize your tasks, ideas, and projects effortlessly!</p>
-      <Link to="/login" className={`m-1 btn border-${isDarkMode ? 'white btn-outline-light shadow-light' : 'black btn-outline-dark shadow'}`} onClick={() => setProgress(100)}>Login</Link>
-      <Link to="/signup" className={`m-1 btn border-${isDarkMode ? 'white btn-outline-light shadow-light' : 'black btn-outline-dark shadow'}`} onClick={() => setProgress(100)}>Sign Up</Link>
+      <Link to="/login" className={`m-1 btn border-${isDarkMode ? 'white btn-outline-light shadow-light' : 'black btn-outline-dark shadow'}`}>Login</Link>
+      <Link to="/signup" className={`m-1 btn border-${isDarkMode ? 'white btn-outline-light shadow-light' : 'black btn-outline-dark shadow'}`}>Sign Up</Link>
     </header>
   );
 }
