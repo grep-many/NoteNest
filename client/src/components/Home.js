@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import darkModeContext from '../context/darkMode/darkModeContext';
 import feature1 from '../assets/feature-1.jpg'
@@ -7,29 +7,37 @@ import feature3 from '../assets/feature-3.jpeg'
 import testimonial1 from '../assets/testimonial-1.jpg'
 import testimonial2 from '../assets/testimonial-2.jpg'
 import testimonial3 from '../assets/testimonial-3.jpg'
+import loadingProgressContext from '../context/loadingProgress/loadingProgressContext';
 
 function Home() {
-  const {isDarkMode} = useContext(darkModeContext);
+  const { isDarkMode } = useContext(darkModeContext);
+  const { setProgress } = useContext(loadingProgressContext);
+  const location = window.location.pathname;
+
+  useEffect(() => {
+    setProgress(0);
+  }, [location]);
+
   return (
     <div className="font-sans">
-      <Header isDarkMode={isDarkMode}/>
-      <Main isDarkMode={isDarkMode}/>
+      <Header isDarkMode={isDarkMode} setProgress={setProgress} />
+      <Main isDarkMode={isDarkMode} />
     </div>
   );
 
-  function Main({isDarkMode}) {
+  function Main({ isDarkMode }) {
     return (
       <main>
-        <Features isDarkMode={isDarkMode}/>
-        <HowItWorks isDarkMode={isDarkMode}/>
-        <WhyChooseUs isDarkMode={isDarkMode}/>
-        <Testimonials isDarkMode={isDarkMode}/>
+        <Features isDarkMode={isDarkMode} />
+        <HowItWorks isDarkMode={isDarkMode} />
+        <WhyChooseUs isDarkMode={isDarkMode} />
+        <Testimonials isDarkMode={isDarkMode} />
       </main>
     );
   }
 }
 
-function Header({isDarkMode}) {
+function Header({ isDarkMode, setProgress }) {
 
   return (
     <header
@@ -37,13 +45,13 @@ function Header({isDarkMode}) {
     >
       <h1 className="fs-1 mb-3">Welcome to Notes App</h1>
       <p>Organize your tasks, ideas, and projects effortlessly!</p>
-      <Link to="/login" className={`m-1 btn border-${isDarkMode ? 'white btn-outline-light shadow-light' : 'black btn-outline-dark shadow'}`}>Login</Link>
-      <Link to="/signup" className={`m-1 btn border-${isDarkMode ? 'white btn-outline-light shadow-light' : 'black btn-outline-dark shadow'}`}>Sign Up</Link>
+      <Link to="/login" className={`m-1 btn border-${isDarkMode ? 'white btn-outline-light shadow-light' : 'black btn-outline-dark shadow'}`} onClick={() => setProgress(100)}>Login</Link>
+      <Link to="/signup" className={`m-1 btn border-${isDarkMode ? 'white btn-outline-light shadow-light' : 'black btn-outline-dark shadow'}`} onClick={() => setProgress(100)}>Sign Up</Link>
     </header>
   );
 }
 
-function Features({isDarkMode}) {
+function Features({ isDarkMode }) {
   return (
     <section className={`${isDarkMode ? 'bg-black text-white border-white' : 'bg-white text-dark border-dark'} border-bottom text-center py-4`}>
       <h2 className="text-center mb-5 fs-2">Features</h2>
@@ -73,7 +81,7 @@ function Features({isDarkMode}) {
   );
 }
 
-function FeatureCard({ imgSrc, title, description ,isDarkMode}) {
+function FeatureCard({ imgSrc, title, description, isDarkMode }) {
   return (
     <div className="col-12 col-md-4">
       <div className={`${isDarkMode ? 'bg-black text-white shadow-light border-white border' : 'bg-white text-dark shadow border-black border'} rounded-3 p-4 text-center`}>
@@ -94,20 +102,20 @@ function FeatureCard({ imgSrc, title, description ,isDarkMode}) {
 }
 
 
-function HowItWorks({isDarkMode}) {
+function HowItWorks({ isDarkMode }) {
   return (
     <section className={`${isDarkMode ? 'bg-black text-white border-white' : 'bg-white text-dark border-dark'} border-bottom text-center py-5`}>
       <h2 className="text-center fs-2 mb-5">How It Works</h2>
       <div className="d-flex flex-wrap justify-content-center gap-4">
-        <Step number={1} description="Sign up and log in to get started." isDarkMode={isDarkMode}/>
-        <Step number={2} description="Create, organize, and manage your notes." isDarkMode={isDarkMode}/>
-        <Step number={3} description="Collaborate and track your progress." isDarkMode={isDarkMode}/>
+        <Step number={1} description="Sign up and log in to get started." isDarkMode={isDarkMode} />
+        <Step number={2} description="Create, organize, and manage your notes." isDarkMode={isDarkMode} />
+        <Step number={3} description="Collaborate and track your progress." isDarkMode={isDarkMode} />
       </div>
     </section>
   );
 }
 
-function Step({ number, description ,isDarkMode}) {
+function Step({ number, description, isDarkMode }) {
   return (
     <div className={`${isDarkMode ? 'bg-black text-white shadow-light border-white border' : 'bg-white text-dark shadow border-black border'} rounded-3 p-4 text-center`} style={{ maxWidth: '250px' }}>
       <h3>Step {number}</h3>
@@ -116,7 +124,7 @@ function Step({ number, description ,isDarkMode}) {
   );
 }
 
-function WhyChooseUs({isDarkMode}) {
+function WhyChooseUs({ isDarkMode }) {
   return (
     <section className={`${isDarkMode ? 'bg-black text-white border-white' : 'bg-white text-dark border-dark'} border-bottom text-center py-5`}>
       <h2 className="text-center mb-5">Why Choose Us</h2>
@@ -141,7 +149,7 @@ function WhyChooseUs({isDarkMode}) {
   );
 }
 
-function WhyChooseItem({ title, description ,isDarkMode}) {
+function WhyChooseItem({ title, description, isDarkMode }) {
   return (
     <div className={`${isDarkMode ? 'bg-black text-white shadow-light border-white border' : 'bg-white text-dark shadow border-black border'} rounded-3 p-4 text-center`} style={{ maxWidth: '300px' }}>
       <h3 className="mb-3">{title}</h3>
@@ -150,7 +158,7 @@ function WhyChooseItem({ title, description ,isDarkMode}) {
   );
 }
 
-function Testimonials({isDarkMode}) {
+function Testimonials({ isDarkMode }) {
   return (
     <section className="p-4">
       <h2 className="text-center mb-5">What Our Users Say</h2>
@@ -178,7 +186,7 @@ function Testimonials({isDarkMode}) {
   );
 }
 
-function TestimonialCard({ imgSrc, name, feedback ,isDarkMode}) {
+function TestimonialCard({ imgSrc, name, feedback, isDarkMode }) {
   return (
     <div className={`${isDarkMode ? 'bg-black text-white shadow-light border-white border' : 'bg-white text-dark shadow border-black border'} rounded-3 p-4 text-center col-12 col-md-4`}>
       <img
@@ -186,8 +194,8 @@ function TestimonialCard({ imgSrc, name, feedback ,isDarkMode}) {
         alt={name}
         className="rounded-3 w-100"
         style={{
-          height:'200px',
-          objectFit:'cover'
+          height: '200px',
+          objectFit: 'cover'
         }}
       />
       <h3>{name}</h3>

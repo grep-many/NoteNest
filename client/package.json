@@ -1,5 +1,5 @@
 {
-  "homepage":"https://grep-many.github.io/NoteNest/",
+  "homepage": "https://grep-many.github.io/NoteNest/",
   "name": "client",
   "version": "0.1.0",
   "private": true,
@@ -11,8 +11,10 @@
     "js-cookie": "^3.0.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^6.28.0",
     "react-scripts": "5.0.1",
+    "react-top-loading-bar": "^2.3.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

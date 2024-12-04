@@ -2,12 +2,15 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import darkModeContext from '../context/darkMode/darkModeContext';
 import alertContext from '../context/alert/alertContext';
+import LoadingBar from 'react-top-loading-bar'
 import Cookies from 'js-cookie';
+import loadingProgressContext from '../context/loadingProgress/loadingProgressContext';
 
 export default function NavbarComponent() {
 
     const { isDarkMode, setIsDarkMode } = useContext(darkModeContext);
     const { showAlert } = useContext(alertContext);
+    const {progress,setProgress} = useContext(loadingProgressContext);
     const location = window.location.pathname; // For active link highlighting
     const closeHamburger = useRef(null);
     const navigate = useNavigate();
@@ -44,75 +47,82 @@ export default function NavbarComponent() {
     }
 
     return (
-        <nav className={`sticky-top navbar navbar-expand-lg ${isDarkMode ? 'navbar-dark bg-black border-white border-bottom' : 'navbar-light bg-light border border-bottom'}`}>
-            <div className="container-fluid">
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                    ref={closeHamburger}
-                >
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <Link className="navbar-brand" to="/">
-                    NoteNest
-                </Link>
-                <div className="form-check form-switch ms-3 tablet" title="Toggle dark mode">
-                    <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="modeSwitch"
-                        checked={isDarkMode}
-                        onChange={handleDarkModeToggle}
-                    />
-                </div>
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <Link
-                                className={`nav-link ${location.pathname === '/' ? 'active' : ''} text-center`}
-                                aria-current="page"
-                                to="/"
-                            >
-                                Home
-                            </Link>
-                        </li>
-                        {Cookies.get('x-auth-token') &&
+        <>
+            <nav className={`sticky-top navbar navbar-expand-lg ${isDarkMode ? 'navbar-dark bg-black border-white border-bottom' : 'navbar-light bg-light border border-bottom'}`}>
+                <div className="container-fluid">
+                    <button
+                        className="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                        ref={closeHamburger}
+                    >
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    <Link className="navbar-brand" to="/" onClick={()=>setProgress(100)}>
+                        NoteNest
+                    </Link>
+                    <div className="form-check form-switch ms-3 tablet" title="Toggle dark mode">
+                        <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="modeSwitch"
+                            checked={isDarkMode}
+                            onChange={handleDarkModeToggle}
+                        />
+                    </div>
+                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
                                 <Link
-                                    className={`nav-link ${location.pathname === '/you' ? 'active' : ''} text-center`}
+                                    className={`nav-link ${location.pathname === '/' ? 'active' : ''} text-center`}
                                     aria-current="page"
-                                    to="/you"
+                                    to="/"
+                                    onClick={()=>{setProgress(100)}}
                                 >
-                                    You
+                                    Home
                                 </Link>
                             </li>
-                        }
-                    </ul>
-                    <form className="d-flex justify-content-center">
-                        <div className="form-check form-switch my-auto desktop" title="Toggle dark mode">
-                            <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="modeSwitch"
-                                checked={isDarkMode}
-                                onChange={handleDarkModeToggle}
-                            />
-                        </div>
-                        {Cookies.get('x-auth-token') ?
-                            <button className={"m-1 btn border-danger " + (isDarkMode ? 'btn-outline-danger' : 'text-black btn-outline-danger') + ' nav-item'} onClick={handleLogout}>Logout</button> :
-                            <>
-                                <Link className={"m-1 btn border-" + (isDarkMode ? 'white btn-outline-light' : 'black text-black btn-outline-dark') + ' nav-item'} to='/signup'>Signup</Link>
-                                <Link className={"m-1 btn border-" + (isDarkMode ? 'white btn-outline-light' : 'black text-black btn-outline-dark') + ' nav-item'} to='/login'>Login</Link>
-                            </>
-                        }
-                    </form>
+                            {Cookies.get('x-auth-token') &&
+                                <li className="nav-item">
+                                    <Link
+                                        className={`nav-link ${location.pathname === '/you' ? 'active' : ''} text-center`}
+                                        aria-current="page"
+                                        to="/you"
+                                    >
+                                        You
+                                    </Link>
+                                </li>
+                            }
+                        </ul>
+                        <form className="d-flex justify-content-center">
+                            <div className="form-check form-switch my-auto desktop" title="Toggle dark mode">
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="modeSwitch"
+                                    checked={isDarkMode}
+                                    onChange={handleDarkModeToggle}
+                                />
+                            </div>
+                            {Cookies.get('x-auth-token') ?
+                                <button className={"m-1 btn border-danger " + (isDarkMode ? 'btn-outline-danger' : 'text-black btn-outline-danger') + ' nav-item'} onClick={handleLogout}>Logout</button> :
+                                <>
+                                    <Link className={"m-1 btn border-" + (isDarkMode ? 'white btn-outline-light' : 'black text-black btn-outline-dark') + ' nav-item'} to='/signup' onClick={()=>setProgress(100)}>Signup</Link>
+                                    <Link className={"m-1 btn border-" + (isDarkMode ? 'white btn-outline-light' : 'black text-black btn-outline-dark') + ' nav-item'} to='/login' onClick={()=>setProgress(100)}>Login</Link>
+                                </>
+                            }
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+            <LoadingBar
+                color={isDarkMode ? '#fff' : '#000'}
+                progress={progress}
+            />
+        </>
     );
 }

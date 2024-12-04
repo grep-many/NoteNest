@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import darkModeContext from '../context/darkMode/darkModeContext';
 import noteContext from '../context/notes/noteContext';
 import alertContext from '../context/alert/alertContext';
+import loadingProgressContext from '../context/loadingProgress/loadingProgressContext';
 
 const AddNote = () => {
 
@@ -13,7 +14,8 @@ const AddNote = () => {
 
     const { isDarkMode } = useContext(darkModeContext);
     const { addNote } = useContext(noteContext);
-    const { showAlert } = useContext(alertContext)
+    const { showAlert } = useContext(alertContext);
+    const { setProgress } = useContext(loadingProgressContext);
 
     const handleAddNote = async (e) => {
         e.preventDefault();
@@ -33,6 +35,7 @@ const AddNote = () => {
         }
 
         try {
+            setProgress(25);
             // Wait for the addNote API call to complete
             const response = await addNote(note.title, note.description, note.tag || 'General');
 
@@ -53,6 +56,7 @@ const AddNote = () => {
                 description: '',
                 tag: ''
             });
+            setProgress(100);
         }
     }
 

@@ -6,12 +6,14 @@ import darkModeContext from '../context/darkMode/darkModeContext';
 import alertContext from '../context/alert/alertContext';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import loadingProgressContext from '../context/loadingProgress/loadingProgressContext';
 
 const Notes = () => {
 
   const { showAlert } = useContext(alertContext)
   const { notes, fetchNotes, editNote } = useContext(noteContext);
   const { isDarkMode } = useContext(darkModeContext);
+  const { setProgress } = useContext(loadingProgressContext);
   const [note, setNote] = useState({
     etitle: '',
     edescription: '',
@@ -23,7 +25,9 @@ const Notes = () => {
 
   useEffect(() => {
     if (Cookies.get('x-auth-token')) {
+      setProgress(25);
       fetchNotes();
+      setProgress(100);
     } else {
       navigate('/')
     }
@@ -60,6 +64,7 @@ const Notes = () => {
     }
 
     try {
+      setProgress(25);
       // Wait for the addNote API call to complete
       const response = await editNote(note.id, note.etitle, note.edescription, note.etag);
 
@@ -75,6 +80,7 @@ const Notes = () => {
       showAlert('Error', 'An error occurred while updating the note. Please try again.', true);
     } finally {
       closeUpdateModalRef.current.click();
+      setProgress(100);
     }
   }
 

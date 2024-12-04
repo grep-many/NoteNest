@@ -4,12 +4,14 @@ import darkModeContext from '../context/darkMode/darkModeContext';
 import alertContext from '../context/alert/alertContext';
 import { Link, useNavigate } from 'react-router-dom';
 import noteContext from '../context/notes/noteContext';
+import loadingProgressContext from '../context/loadingProgress/loadingProgressContext';
 
 
 const Signup = () => {
     const { fetchNotes } = useContext(noteContext);
     const { isDarkMode } = useContext(darkModeContext);
     const { showAlert } = useContext(alertContext);
+    const { setProgress } = useContext(loadingProgressContext);
 
     const [credentials, setCredentials] = useState({
         name: '',
@@ -25,6 +27,7 @@ const Signup = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setProgress(25);
 
         const host = process.env.REACT_APP_HOST; // e.g., "http://localhost:5000"
         const url = `${host}/api/auth/createuser`;  // Correct URL for Signup endpoint
@@ -65,6 +68,8 @@ const Signup = () => {
             }
         } catch (error) {
             showAlert('Error', 'Something went wrong', true);
+        } finally {
+            setProgress(100);
         }
     };
 
@@ -150,7 +155,7 @@ const Signup = () => {
                 </div>
 
                 <div className="mb-3 form-check">
-                    <p className={`text-${isDarkMode?'white':'black'}`}>Already have an account? <Link to="/login">Log in</Link></p>
+                    <p className={`text-${isDarkMode ? 'white' : 'black'}`}>Already have an account? <Link to="/login">Log in</Link></p>
                 </div>
 
                 <button type="submit" className={`btn ${isDarkMode ? 'btn-outline-light' : 'btn-outline-dark'}`}>
