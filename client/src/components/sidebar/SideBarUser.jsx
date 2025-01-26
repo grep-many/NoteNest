@@ -2,7 +2,6 @@ import React from 'react';
 import {
     ChevronsUpDown,
     LogOut,
-    Settings,
     UsersRound,
 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
