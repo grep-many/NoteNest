@@ -45,7 +45,7 @@ const TestimonialSection = () => {
                                             {/* Avatar component for the user's photo */}
                                             <Avatar className="h-[100px] w-[100px] rounded-lg">
                                                 <AvatarImage src={testimonial?.avatar} alt={testimonial?.name} />
-                                                <AvatarFallback className="rounded-lg">
+                                                <AvatarFallback className="rounded-lg text-6xl font-bold">
                                                     {testimonial?.name.split(" ")[0].charAt(0).toUpperCase()}
                                                 </AvatarFallback>
                                             </Avatar>
