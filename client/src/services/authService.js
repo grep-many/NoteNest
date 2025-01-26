@@ -32,7 +32,9 @@ export const loginService = async (formData, setProgress) => {
 
 export const checkServerHealthService = async ()=>{
     try{
-        const {data} = await axiosInstance.get('/');
+        const {data} = await axiosInstance.get('/',{
+            timeout:0,
+        });
         if(data?.success){
             return true;
         }else{
