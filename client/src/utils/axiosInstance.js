@@ -1,0 +1,26 @@
+import { serverUrl } from "@/config/envConfig";
+import axios from "axios";
+
+const axiosInstance = axios.create({
+    baseURL: serverUrl,
+    timeout:3000,
+    headers: {
+        "Content-Type": "application/json",
+    }
+});
+
+axiosInstance.interceptors.request.use(
+    async (config) => {
+        const accessToken = localStorage.getItem("token");
+
+        if (accessToken) {
+            config.headers.Authorization = `Bearer ${accessToken}`
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error)
+    }
+)
+
+export default axiosInstance
