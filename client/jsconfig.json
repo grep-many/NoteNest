@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".", // The root directory for resolving modules
+      "paths": {
+        "@/*": ["src/*"] // Map @/* to ./src/*
+      }
+    },
+    "exclude": ["node_modules"]
+  }
+  
