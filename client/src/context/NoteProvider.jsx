@@ -12,9 +12,9 @@ export const NoteProvider = ({ children }) => {
     const { searchText } = usePage();
 
     const getNotes = async (query = searchText) => {
-        const response = await fetchNotesService(query);
-        if (response?.status === 200) {
-            setNotes(response?.data);
+        const {status,data} = await fetchNotesService(query);
+        if (status === 200) {
+            setNotes(data);
         } else {
             toast({
                 variant: "destructive",
@@ -26,9 +26,9 @@ export const NoteProvider = ({ children }) => {
     }
 
     const addNote = async (noteData) => {
-        const response = await addNotesService(noteData)
-        if (response.status === 201) {
-            getNotes();
+        const {status,data} = await addNotesService(noteData)
+        if (status === 201) {
+            setNotes((prev) => [...prev, data])
             toast({
                 description: "Note added successfully!",
             });
@@ -45,10 +45,14 @@ export const NoteProvider = ({ children }) => {
         getNotes()
     }, [])
 
-    const editNote = async (id, noteData) => {
-        const response = await updateNotesService(id, noteData);
-        if (response?.data) {
-            getNotes();
+    const editNote = async (originalNote, updatedNote) => {
+        const { status, data } = await updateNotesService(originalNote?._id, updatedNote);
+        if (status === 200) {
+            setNotes((prev) =>
+                prev?.map((note) =>
+                    note?._id === data?._id ? data : note
+                )
+            )
             toast({
                 description: "Note edited Successfully!!",
             });
@@ -61,11 +65,10 @@ export const NoteProvider = ({ children }) => {
         }
     }
 
-
     const removeNote = async (id) => {
-        const response = await removeNotesService(id);
-        if (response?.data) {
-            getNotes();
+        const {status} = await removeNotesService(id);
+        if (status===200) {
+            setNotes((prevNotes) => prevNotes.filter((note) => note._id !== id));
             toast({
                 description: "Note removed Successfully!",
             });
@@ -80,11 +83,16 @@ export const NoteProvider = ({ children }) => {
 
     const pinNote = async (id) => {
 
-        const response = await pinNotesService(id);
-        if (response?.data) {
-            getNotes();
+        const {status,data} = await pinNotesService(id);
+        if (status===200) {
+            // getNotes();
+            setNotes((prev) =>
+                prev?.map((note) =>
+                    note?._id === data?._id ? data : note
+                )
+            )
             toast({
-                description: `Note ${response?.data?.isPinned ? 'pinned' : 'unpinned'} Successfully!`,
+                description: `Note ${data?.isPinned ? 'pinned' : 'unpinned'} Successfully!`,
             });
         } else {
             toast({

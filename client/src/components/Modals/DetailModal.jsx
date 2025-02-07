@@ -29,10 +29,10 @@ const DetailModal = ({ sidebarItem = false, data, isDialogOpen, setIsDialogOpen,
 
     const handleStatusClick = () => {
         if (sidebarItem) {
-            handleStatus(data?._id, data?.status)
+            handleStatus(data)
             setIsDialogOpen(false)
         } else {
-            handleStatus(data?._id, data?.status)
+            handleStatus(data)
         }
     }
 

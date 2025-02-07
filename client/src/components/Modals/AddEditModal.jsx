@@ -35,7 +35,7 @@ const AddEditModal = ({tab, isDialogOpen, setIsDialogOpen, data, type = 'add', o
         if (data?._id === undefined) {
             await onSave(noteData);
         } else {
-            await onSave(data?._id, noteData);
+            await onSave(data, noteData);
         }
     };
 

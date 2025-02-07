@@ -80,7 +80,7 @@ const updateTask = async (req, res) => {
         await task.save();
 
         // Send the updated task as a response
-        res.json(task);
+        res.status(200).json(task);
     } catch (error) {
         console.error('Error updating task:', error.message);
         res.status(500).json({ msg: 'Internal Server error' }); // 500 Internal Server Error
@@ -106,7 +106,7 @@ const deleteTask = async (req, res) => {
         await Task.findByIdAndDelete(id);
 
         // Send a success message after deleting the task
-        res.json({ msg: 'Task deleted' });
+        res.status(200).json({ msg: 'Task deleted' });
     } catch (error) {
         console.error('Error deleting task:', error.message);
         res.status(500).json({ msg: 'Internal Server error' }); // 500 Internal Server Error

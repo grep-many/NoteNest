@@ -87,7 +87,7 @@ const updateNotes = async (req, res) => {
         await note.save();
 
         // Send the updated note as a response
-        res.json(note);
+        res.status(200).json(note);
     } catch (error) {
         console.error('Error updating note:', error.message);
         res.status(500).json({ msg: 'Internal Server error' }); // 500 Internal Server Error
@@ -117,7 +117,7 @@ const updateNotesIsPinned = async (req, res) => {
         await note.save();
 
         // Send the updated note as a response
-        res.json(note);
+        res.status(200).json(note);
     } catch (error) {
         console.error('Error updating note:', error.message);
         res.status(500).json({ msg: 'Internal Server error' }); // 500 Internal Server Error
@@ -143,7 +143,7 @@ const deleteNotes = async (req, res) => {
         await Note.findByIdAndDelete(id);
 
         // Send a success message after deleting the note
-        res.json({ msg: 'Note deleted' });
+        res.status(200).json({ msg: 'Note deleted' });
     } catch (error) {
         console.error('Error deleting note:', error.message);
         res.status(500).json({ msg: 'Internal Server error' }); // 500 Internal Server Error
