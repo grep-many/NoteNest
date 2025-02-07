@@ -11,7 +11,7 @@ import { useNote } from '@/context/NoteProvider';
 const NoteContainer = ({ add = true }) => {
 
     const { toast } = useToast();
-    const { notes, getNotes, addNote } = useNote();
+    const { notes, addNote } = useNote();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const note = {
         id: null,
@@ -34,7 +34,6 @@ const NoteContainer = ({ add = true }) => {
                             <div key={index}>
                                 <NoteCard
                                     note={note}
-                                    callbackFunction={getNotes}
                                     toast={toast}
                                 />
                             </div>

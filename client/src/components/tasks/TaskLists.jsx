@@ -34,7 +34,7 @@ const TaskLists = ({
                 </TableCell>
                 <TableCell
                     className="[&:has([role=checkbox])]:pr-2 w-[70px] select-none"
-                    onClick={() => taskOperations?.status(task?._id, task?.status)}
+                    onClick={() => taskOperations?.status(task)}
                 >
                     <div className={`flex items-center justify-end ${task.status ? 'text-green-500' : 'text-yellow-700'}`}>
                         {task.status ? 'done' : 'pending'}

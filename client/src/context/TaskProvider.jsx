@@ -12,10 +12,10 @@ export const TaskProvider = ({ children }) => {
     const {searchText} = usePage();
 
     const getTasks = async (query = searchText) => {
-        const response = await fetchTasksService(query);
+        const {status,data} = await fetchTasksService(query);
 
-        if (response?.status === 200) {
-            setTasks(response?.data);
+        if (status === 200) {
+            setTasks(data);
         } else {
             toast({
                 variant: "destructive",
@@ -27,9 +27,9 @@ export const TaskProvider = ({ children }) => {
     }
 
     const addTask = async (noteData) => {
-        const response = await addTaskService(noteData)
-        if (response.status === 201) {
-            getTasks();
+        const {status,data} = await addTaskService(noteData)
+        if (status === 201) {
+            setTasks((prev) => [...prev, data])
             toast({
                 description: "Task added successfully!",
             });
@@ -44,9 +44,13 @@ export const TaskProvider = ({ children }) => {
 
     const editTask = async (id, taskData) => {
 
-        const response = await updateTaskService(id, taskData);
-        if (response?.data) {            
-            getTasks();
+        const {status,data} = await updateTaskService(id, taskData);
+        if (status===200) {            
+            setTasks((prev) =>
+                prev?.map((task) =>
+                    task?._id === data?._id ? data : task
+                )
+            )
             toast({
                 description: "Task edited Successfully!!",
             });
@@ -60,11 +64,15 @@ export const TaskProvider = ({ children }) => {
     }
 
     const pinTask = async (id,isPinned) => {
-        const response = await updateTaskService(id, { isPinned: !isPinned });
-        if (response?.data) {
-            getTasks();
+        const {status,data} = await updateTaskService(id, { isPinned: !isPinned });
+        if (status===200) {
+            setTasks((prev) =>
+                prev?.map((task) =>
+                    task?._id === data?._id ? data : task
+                )
+            )
             toast({
-                description: `Task ${response?.data?.isPinned ? 'pinned' : 'unpinned'} Successfully!`,
+                description: `Task ${data?.isPinned ? 'pinned' : 'unpinned'} Successfully!`,
             });
 
         } else {
@@ -76,13 +84,17 @@ export const TaskProvider = ({ children }) => {
         }
     }
 
-    const checkTask = async (id,status) => {
+    const checkTask = async (task) => {
 
-        const response = await updateTaskService(id, { status: !status });
-        if (response?.data) {
-            getTasks();
+        const {status,data} = await updateTaskService(task?._id, { status: !task?.status });
+        if (status===200) {
+            setTasks((prev) =>
+                prev?.map((task) =>
+                    task?._id === data?._id ? data : task
+                )
+            )
             toast({
-                description: `Task marked as ${response?.data?.status ? 'done' : 'pending'} Successfully!`,
+                description: `Task marked as ${data?.status ? 'done' : 'pending'} Successfully!`,
             });
 
         } else {
@@ -95,9 +107,9 @@ export const TaskProvider = ({ children }) => {
     }
 
     const removeTask = async (id) => {
-        const response = await removeTaskService(id);
-        if (response?.data) {
-            getTasks();
+        const {status,data} = await removeTaskService(id);
+        if (status===200) {
+            setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
             toast({
                 description: "Task removed Successfully!",
             });

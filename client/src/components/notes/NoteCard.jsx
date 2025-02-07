@@ -10,7 +10,7 @@ import DetailModal from '../Modals/DetailModal';
 const NoteCard = ({
     note,
 }) => {
-    
+
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const { pinNote, removeNote, editNote } = useNote();
 
@@ -23,7 +23,7 @@ const NoteCard = ({
             <Card className="h-full transition-all ease-in-out hover:shadow-2xl cursor-pointer">
                 <CardHeader>
                     <div className="flex justify-between gap-2 mt-2 sm:mt-0">
-                        <Button variant="ghost" className="max-w-6" onClick={()=>pinNote(note?._id)}>
+                        <Button variant="ghost" className="max-w-6" onClick={() => pinNote(note?._id)}>
                             <Pin className={`h-5 w-5 ${note?.isPinned ? 'text-indigo-700' : ''}`} />
                         </Button>
                         <h6 className="text-lg font-bold w-full text-center" onClick={handledetail} >{note?.title}</h6>
