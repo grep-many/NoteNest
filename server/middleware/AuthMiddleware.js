@@ -7,11 +7,15 @@ const authenticateToken = (req,res,next)=>{
 
     if(!token) return res.sendStatus(401);
 
-    jwt.verify(token,jwtSecret,(err,user)=>{
-        if(err) return res.sendStatus(401);
-        req.user = user;
-        next();
-    })
+    try{
+        jwt.verify(token,jwtSecret,(err,user)=>{
+            if(err) return res.sendStatus(401);
+            req.user = user;
+            next();
+        })
+    }catch(err){
+        return res.status(401).json({ message: "Invalid token" }); 
+    }
 }
 
 module.exports = {
